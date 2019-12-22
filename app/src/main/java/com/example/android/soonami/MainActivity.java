@@ -30,6 +30,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.HttpRetryException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -174,9 +175,12 @@ public class MainActivity extends AppCompatActivity {
                     inputStream = urlConnection.getInputStream();
                     jsonResponse = readFromStream(inputStream);
                 }
+                else {
+                    Log.e(LOG_TAG, "Error response code : " + urlConnection.getResponseCode());
+                }
 
             } catch (IOException e) {
-                // TODO: Handle the exception
+                Log.e(LOG_TAG, "Error in retrieving the JSON results.", e);
             } finally {
                 if (urlConnection != null) {
                     urlConnection.disconnect();
